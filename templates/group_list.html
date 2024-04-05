@@ -1,0 +1,32 @@
+<!-- group_list.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group List</title>
+    {% comment %} <script>
+        function redirectToJoinSuccess(groupName) {
+            window.location.href = "{% url 'join_success' group_name=groupName %}";
+        }
+    </script>
+     {% endcomment %}
+</head>
+<body>
+    <h1>Community Groups</h1>
+    <ul>
+        {% for group in groups %}
+            <li>
+                {{ group.name }} - {{ group.description }}
+                <form action="{% url 'join_group_by_name' group_id=group.id %}" method="post" onsubmit="redirectToJoinSuccess('{{ group.name }}')">
+                    {% csrf_token %}
+                    <button type="submit">Join</button>
+                </form>
+                <a href="{% url 'group_info' group.id %}">Info</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'create_group' %}">Create a New Group</a>
+</body>
+</html>

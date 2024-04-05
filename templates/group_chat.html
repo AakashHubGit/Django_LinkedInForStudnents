@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ group.name }} Group Chat</title>
+</head>
+<body>
+    <h1>{{ group.name }} Group Chat</h1>
+    
+    <div id="chat-container">
+        {% for message in group_messages %}
+            <div>
+                <strong>{{ message.user.username }}</strong> ({{ message.timestamp }}): {{ message.message }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <form action="{% url 'send_message' group_id=group.id %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="message" placeholder="Type your message...">
+        <button type="submit">Send</button>
+    </form>
+</body>
+</html>
